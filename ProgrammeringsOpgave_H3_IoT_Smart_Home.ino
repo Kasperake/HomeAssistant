@@ -1,6 +1,6 @@
 int menuBtn = 12; 
 
-volatile int menuBtnState = HIGH; // W. PULLUP REVERSED
+volatile int menuBtnState = HIGH; // W. PULLUP REVERSE
 
 void menuButtonIsr() 
 {
