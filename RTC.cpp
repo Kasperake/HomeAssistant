@@ -65,3 +65,13 @@ String getDate()
 
   return text; 
 }
+
+DateTime getDateTime() 
+{
+  return rtc.now();
+}
+
+void setDateTime(DateTime dateTime)
+{
+  rtc.adjust(dateTime);
+}

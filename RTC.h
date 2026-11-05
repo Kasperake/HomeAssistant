@@ -8,4 +8,7 @@ void initRtc();
 String getRtc(); 
 String getDate();
 
+DateTime getDateTime();
+void setDateTime(DateTime dateTime);
+
 #endif RTC_H_
