@@ -24,8 +24,7 @@ String getTemperature()
   float hic = dht.computeHeatIndex(t, h, false);
   text.concat("Temp: ");
   text.concat(String(t, 0));
-  //text.cp437(true);
-  //text.concat(248); // °
+  text.concat(char(248));
   text.concat(F("C"));
 
   return text; 

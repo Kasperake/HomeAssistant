@@ -53,6 +53,8 @@ void setup() {
   }
 
   initButtons();
+
+  display.cp437(true);
 }
 
 void initButtons()
