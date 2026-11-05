@@ -2,14 +2,13 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include "DHT.h"
 #include "RTC.h"
+#include "Termometer.h"
 #define SCREEN_WIDTH 128 
 #define SCREEN_HEIGHT 64 
-#define DHTPIN 2 
-#define DHTTYPE DHT11
+
 #define OLED_RESET 4 // Reset pin # (or -1 if sharing Arduino reset pin)
-DHT dht(DHTPIN, DHTTYPE);
+
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 const unsigned long interval = 3000; 
@@ -25,12 +24,15 @@ unsigned long previousPress = 0;
 volatile bool menuButtonPressed = false;
 const unsigned long buttonDebounce = 20;
 
+// Temperature global vars 
+uint8_t dhtPin = 2; 
+uint8_t dhtType = DHT11;
+
 
 void setup() {
   Serial.begin(9600);
-
   // Init Termometer
-  dht.begin();
+  initTermometer();
 
   // Init Rtc
   initRtc();
@@ -112,32 +114,12 @@ void printDht()
   display.setTextSize(2); // Normal 1:1 pixel scale
   display.setTextColor(WHITE); // Draw white text
   display.setCursor(0,0); // Start at top-left corner
-    // Wait a few seconds between measurements.
-  //delay(2000);
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  float h = dht.readHumidity();
-  // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
-  // Read temperature as Fahrenheit (isFahrenheit = true)
-  float f = dht.readTemperature(true);
-  // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t) || isnan(f)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
-  }
-  // Compute heat index in Fahrenheit (the default)
-  float hif = dht.computeHeatIndex(f, h);
-  // Compute heat index in Celsius (isFahreheit = false)
-  float hic = dht.computeHeatIndex(t, h, false);
-  display.print(F("RH: "));
-  display.print(h);
-  display.print(F("%"));
+
+  String humidity = getHumidity();
+  display.print(humidity);
+
   display.setCursor(0,30);
-  display.print("Temp: ");
-  display.print(t, 0);
-  display.cp437(true);
-  display.write(248); // °
-  display.print(F("C"));
+  String temp = getTemperature();
+  display.print(temp);
   display.display();
 }
