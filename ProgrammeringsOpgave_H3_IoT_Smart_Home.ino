@@ -3,7 +3,7 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "DHT.h"
-#include "RTClib.h"
+#include "RTC.h"
 #define SCREEN_WIDTH 128 
 #define SCREEN_HEIGHT 64 
 #define DHTPIN 2 
@@ -11,8 +11,7 @@
 #define OLED_RESET 4 // Reset pin # (or -1 if sharing Arduino reset pin)
 DHT dht(DHTPIN, DHTTYPE);
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-RTC_DS3231 rtc;
-char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
 const unsigned long interval = 3000; 
 unsigned long startMillis = millis(); 
 unsigned long currentMillis, previousMillis;
@@ -33,27 +32,15 @@ void setup() {
   // Init Termometer
   dht.begin();
 
+  // Init Rtc
+  initRtc();
+
   // Init display OLED
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) 
   { 
     Serial.println(F("SSD1306 allocation failed"));
     for(;;); 
   }
-  
-  // Init RTC
-  if (! rtc.begin()) {
-    Serial.println("Couldn't find RTC");
-    Serial.flush();
-  while (1) delay(10);
-  }
-
-  if (rtc.lostPower()) {
-    Serial.println("RTC lost power, let's set the time!");
-  }
-
-  // RTC Adjust
-  rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-
 
   // Menu Button
   pinMode(menuBtn, INPUT_PULLUP);
@@ -91,42 +78,34 @@ void loop() {
   }
 
   if (showRtc)
+  {
     printRtc();
+    printDate();
+  }
   else
+  {
     printDht();
+  }
 }
 
 void printRtc() 
 {
-  DateTime now = rtc.now(); 
   display.clearDisplay();
   display.setTextSize(2); // Normal 1:1 pixel scale
   display.setTextColor(WHITE); // Draw white text
   display.setCursor(0,0); // Start at top-left corner
-  
-  if (now.hour() < 10)
-    display.print("0");
-  display.print(now.hour(), DEC);
-  display.print(':');
-  
-  if (now.minute() < 10)
-    display.print("0");
-  display.print(now.minute(), DEC);
-  display.print(':');
-  if (now.second() < 10)
-    display.print("0");
-  display.print(now.second(), DEC);
+  String clock = getRtc();
+  display.print(clock); 
+}
 
-
-
+void printDate() 
+{
   display.setCursor(0,30); // Start at top-left corner
-  display.print(now.day(), DEC);
-  display.print('.');
-  display.print(now.month(), DEC);
-  display.print('.');
-  display.print(now.year(), DEC);
+  String date = getDate();
+  display.print(date); 
   display.display();
 }
+
 void printDht() 
 {
   display.clearDisplay();
