@@ -66,13 +66,13 @@ void loop() {
 
     int currentState = digitalRead(menuBtn);
 
-    if (currentState == LOW && previousState == HIGH) {
-      previousState = LOW; 
+    if (currentState == HIGH && previousState == LOW) {
+      previousState = HIGH; 
     }
-    else if (currentState == HIGH && previousState == LOW) {
-      previousState = HIGH;
+    else if (currentState == LOW && previousState == HIGH) {
+      previousState = LOW;
       menu = !menu; 
-      if (menu == HIGH)
+      if (menu == LOW)
         showRtc = true;
       else 
         showRtc = false;
