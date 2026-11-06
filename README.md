@@ -96,6 +96,7 @@ Button table
 
 OLED table
 | Pin | Component | Description |
+|------|-------------|-------------|
 | 2 | DHT11 | Signal |
 | SCL | RTC | Clock |
 | SLA | RTC | Data |
