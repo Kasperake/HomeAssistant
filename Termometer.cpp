@@ -8,7 +8,7 @@ void initTermometer()
   dht.begin();
 }
 
-String getTemperature() 
+float getTemperature() 
 {
   String text = "";
 
@@ -18,34 +18,27 @@ String getTemperature()
   if (isnan(t) || isnan(h)) {
     text = F("Failed to read the temperature from DHT sensor!");
     Serial.println(text);
-    return text;
+    return 0;
   }
   // Compute heat index in Celsius (isFahreheit = false)
   float hic = dht.computeHeatIndex(t, h, false);
-  text.concat("Temp: ");
-  text.concat(String(t, 0));
-  text.concat(char(248));
-  text.concat(F("C"));
 
-  return text; 
+
+  return hic; 
 }
 
 
-String getHumidity() 
+float getHumidity() 
 {
-  String text = "";
   float h = dht.readHumidity();
+
+  String text = "";
 
   if (isnan(h)) {
     text = F("Failed to read the humidity from DHT sensor!");
     Serial.println(text);
-    return text;
+    return 0;
   }
 
-
-  text.concat(F("RH: "));
-  text.concat(String(h, 0));
-  text.concat(F("%"));
-
-  return text; 
+  return h; 
 }

@@ -58,6 +58,7 @@ Projektet er udviklet med fokus på enkel betjening, overskuelig kode og mulighe
   - `Adafruit_SSD1306 v.2.5.17`
   - `DHT v1.4.7`
   - `RTClib v2.1.4`
+  - `ArduinoJson v7.4.3`
 
 ---
 

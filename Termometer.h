@@ -8,7 +8,7 @@ extern uint8_t dhtType;
 
 void initTermometer();
 
-String getTemperature(); 
-String getHumidity();
+float getTemperature(); 
+float getHumidity();
 
 #endif TERMOMETER_H_

@@ -4,6 +4,7 @@
 #include <Adafruit_SSD1306.h>
 #include "RTC.h"
 #include "Termometer.h"
+#include <ArduinoJson.h>
 #define SCREEN_WIDTH 128 
 #define SCREEN_HEIGHT 64 
 #define OLED_RESET -1 // Set to Adurinos buildin reset button
@@ -168,6 +169,7 @@ void selectBtnIsr() {
 
 
 
+
 void loop() {
   // Control the Prell from when switching back and forth between the Clock and Temp/RH. 
    if ((millis() - previousSelectMillis) > buttonDebounce && selectBtnPressed) {
@@ -279,9 +281,27 @@ void loop() {
     if (millis() - startMillis >= interval)
     {
         startMillis = millis();
-        printDht();
+        float humidity = getHumidity();
+        float temp = getTemperature();
+        printTemperatureAndHumidity(temp, humidity);
+
+        String json = saveMeasurementToJson(temp, humidity);
+        Serial.println(json);
     }
   }
+}
+
+String saveMeasurementToJson(float temperature, float humidity) 
+{
+  JsonDocument json; 
+
+  json["temperature"] = temperature;
+  json["humidity"] = humidity; 
+
+  String output; 
+  serializeJson(json, output);
+
+  return output;
 }
 
 // Print AdjustRtc
@@ -322,18 +342,30 @@ void printDate()
 }
 
 // Display Temperature and RH. 
-void printDht() 
+void printTemperatureAndHumidity(float temp, float humidity) 
 {
   display.clearDisplay();
   display.setTextSize(2); 
   display.setTextColor(WHITE); 
   display.setCursor(0,0); 
 
-  String humidity = getHumidity();
-  display.print(humidity);
+  String humidityText = "";
 
+  humidityText.concat(F("RH: "));
+  humidityText.concat(String(humidity, 0));
+  humidityText.concat(F("%"));
+  display.print(humidityText);
+
+
+  String tempText = "";
   display.setCursor(0,30);
-  String temp = getTemperature();
-  display.print(temp);
+
+
+  tempText.concat("Temp: ");
+  tempText.concat(String(temp, 0));
+  tempText.concat(char(248));
+  tempText.concat(F("C"));
+
+  display.print(tempText);
   display.display();
 }
