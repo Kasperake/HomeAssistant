@@ -43,10 +43,7 @@ String getRtc()
     text.concat("0");
   text.concat(now.second());
 
-  //char* result = text.c_str();
-
-  return text; 
-
+  return text;
 }
 
 
@@ -60,9 +57,7 @@ String getDate()
   text.concat(now.month());
   text.concat(".");
   text.concat(now.year());
-
-  //char* result = text.c_str(); 
-
+  
   return text; 
 }
 

@@ -1,6 +1,6 @@
 #ifndef TERMOMETER_H_
 #define TERMOMETER_H_
-#include <Arduino.h>  // includer nødvendige .h-filer
+#include <Arduino.h>  
 #include "DHT.h"
 
 extern uint8_t dhtPin;

@@ -6,39 +6,42 @@
 #include "Termometer.h"
 #define SCREEN_WIDTH 128 
 #define SCREEN_HEIGHT 64 
-
-#define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define OLED_RESET -1 // Set to Adurinos buildin reset button
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
 const unsigned long interval = 3000; 
 unsigned long startMillis = millis(); 
 unsigned long currentMillis, previousAdjustMillis = 0, previousSelectMillis = 0, previousDownBtnState = 0;
 bool showRtc = true, isAdjustMode = false;
-// Menu 
+
+// Buttons 
 const int selectBtn = 12;
 const int upBtn = 8;
 const int downBtn = 7;
-const int adjustBtn = 3; // aka. Indstil tid menu
+const int adjustBtn = 3; // aka. adjust time button
 
 DateTime editTime;
-int adjustStep = 0; // 0 = hour, 1 = minute, 2 = second
 
+// We need this step to handle which time we need to adjust.
+int adjustStep = 0; // 0 = hour, 1 = minute, 2 = second
 unsigned long previousUpMillis = 0;
 unsigned long previousDownMillis = 0;
-
 int previousSelectBtnState = HIGH, previousAdjustBtnState = HIGH, previousUpBtnState = HIGH;
 int menu = 0; 
+
+// Those buttons will be handled by the ISR's. 
 volatile bool selectBtnPressed = false, upBtnPressed = false, downBtnPressed = false, adjustBtnPressed = false;
+
 const unsigned long buttonDebounce = 20;
 
-// Temperature global vars 
+// Temperature global vars - Termometer pin and type can be controlled from here. 
 uint8_t dhtPin = 2; 
 uint8_t dhtType = DHT11;
 
 
 void setup() {
   Serial.begin(9600);
+
   // Init Termometer
   initTermometer();
 
@@ -52,8 +55,10 @@ void setup() {
     for(;;); 
   }
 
+  // Init control buttons. 
   initButtons();
 
+  // Enables code page 437. Old IBM encoding standard, which allows us to display the celcius degrees symbol.
   display.cp437(true);
 }
 
@@ -93,6 +98,8 @@ void initButtons()
 }
 
 
+// Whenever the user has verified the Hours, Minutes or the Seconds - They will confirm the number.
+// Then it will go to the next step. If we exceeds the adjustStep 3 - Then it will start from the beginning again. 
 void calcNextStep()
 {
   adjustStep++; 
@@ -100,6 +107,7 @@ void calcNextStep()
     adjustStep = 0;
 }
 
+// Down adjustment of the time. 
 void downAdjustTime(int step) 
 {
   switch(step)
@@ -118,6 +126,8 @@ void downAdjustTime(int step)
   }
 }
 
+
+// Up adjustment of the time.
 void upAdjustTime(int step) 
 {
   switch(step)
@@ -135,7 +145,6 @@ void upAdjustTime(int step)
     break; 
   }
 }
-
 
 
 void adjustBtnIsr() 
@@ -157,8 +166,10 @@ void selectBtnIsr() {
   selectBtnPressed = true;
 }
 
+
+
 void loop() {
-  // Menu: RTC - Temp/RH
+  // Control the Prell from when switching back and forth between the Clock and Temp/RH. 
    if ((millis() - previousSelectMillis) > buttonDebounce && selectBtnPressed) {
     previousSelectMillis = millis();
 
@@ -186,7 +197,7 @@ void loop() {
     }
   }
 
-// Adjust Time 
+  // Adjust Time Prell handling.
   if ((millis() - previousAdjustMillis) > buttonDebounce && adjustBtnPressed)
   {
     previousAdjustMillis = millis();
@@ -217,7 +228,7 @@ void loop() {
     }
   }
 
-  // UpBtn press
+  // Handles the UpButton Prell
   if ((millis() - previousUpMillis) > buttonDebounce && upBtnPressed) {
     previousUpMillis = millis();
 
@@ -235,7 +246,7 @@ void loop() {
     }
   }
 
-  // Down button press
+  // Handles the Down Button Prell
   if ((millis() - previousDownMillis) > buttonDebounce && downBtnPressed) {
     previousDownMillis = millis();
 
@@ -253,21 +264,27 @@ void loop() {
     }
   }
 
+  // Always show adjustmode as first, if the adjust mode is activated. 
   if (isAdjustMode)
   {
     printAdjustRtc(); 
   }
-  else if (showRtc)
+  else if (showRtc) // Else show RTC as default. 
   {
     printRtc();
     printDate();
   }
   else 
   {
-    printDht();
+    if (millis() - startMillis >= interval)
+    {
+        startMillis = millis();
+        printDht();
+    }
   }
 }
 
+// Print AdjustRtc
 void printAdjustRtc()
 {
     display.clearDisplay();
@@ -284,16 +301,18 @@ void printAdjustRtc()
     display.display();
 }
 
+// Print RTC screen
 void printRtc() 
 {
   display.clearDisplay();
-  display.setTextSize(2); // Normal 1:1 pixel scale
-  display.setTextColor(WHITE); // Draw white text
-  display.setCursor(0,0); // Start at top-left corner
+  display.setTextSize(2); 
+  display.setTextColor(WHITE); 
+  display.setCursor(0,0); 
   String clock = getRtc();
   display.print(clock); 
 }
 
+// Display Date
 void printDate() 
 {
   display.setCursor(0,30); // Start at top-left corner
@@ -302,12 +321,13 @@ void printDate()
   display.display();
 }
 
+// Display Temperature and RH. 
 void printDht() 
 {
   display.clearDisplay();
-  display.setTextSize(2); // Normal 1:1 pixel scale
-  display.setTextColor(WHITE); // Draw white text
-  display.setCursor(0,0); // Start at top-left corner
+  display.setTextSize(2); 
+  display.setTextColor(WHITE); 
+  display.setCursor(0,0); 
 
   String humidity = getHumidity();
   display.print(humidity);
