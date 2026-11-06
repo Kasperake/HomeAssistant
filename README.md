@@ -1,5 +1,5 @@
 # **Praktisk Programmerings Project - Home Assistant**
-H3 Praktisk Programmerings projekt. En prototype af en simpel home assistant.
+H3 Praktisk Programmerings projekt. Er starten på en prototype af en simpel home assistant.
 ## **Indhold**
 1. [Introduktion](#introduktion)
 2. [Krav](#krav)
@@ -10,7 +10,8 @@ H3 Praktisk Programmerings projekt. En prototype af en simpel home assistant.
 7. [Licens](#licens)
 ---
 ## **Introduktion**
-Dette projekt er et simpelt adurino program, som gør det nemmere for forbrugeren at se tid, temperatur og luftfugtighed. Det er en prototype, som kan bygges videre på.
+Dette projekt er et simpelt adurino program, som gør det nemmere for forbrugeren at se tid, temperatur og luftfugtighed. 
+Det er en prototype, som er egnet til at skulle blive udvidet med flere forskellige features.
 ---
 ## **Krav**
 - Adurino board
@@ -23,25 +24,18 @@ Trin-for-trin instruktioner til installation og opsætning.
    ```bash
    git clone https://github.com/Kasperake/HomeAssistant.git
    ```
-2. Naviger til projektmappen:
-   ```bash
-   cd projekt-navn
-   ```
-3. Byg projektet:
-   ```bash
-   dotnet build
-   ```
-4. Kør programmet:
-   ```bash
-   dotnet run
+2. Åbn Adurino IDE
+   ```åbn
+   ProgrammeringsOpgave_H3_IoT_Smart_Home
    ```
 ---
 ## **Brug**
-Man sætter strøm til.
+Der sættes strøm til.
 ---
 ## **Funktioner**
 - Visning af tid, temperatur og luftfugtighed.
 - Måling af temperatur og luftfugtighed.
+- Indstille klokken manuelt
 ---
 ## **Bidrag**
 Udvid med nye "home assistant" features.    
