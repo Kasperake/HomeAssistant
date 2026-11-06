@@ -1,47 +1,141 @@
-# **Praktisk Programmerings Project - Home Assistant**
-H3 Praktisk Programmerings projekt. Er starten på en prototype af en simpel home assistant.
-## **Indhold**
+# Home Assistant – H3 Praktisk Programmering
+
+Dette projekt er udviklet som en del af **H3 Praktisk Programmering** og fungerer som den første prototype på en simpel **Home Assistant** baseret på Arduino.
+
+Formålet er at udvikle et system, der kan vise og overvåge forskellige informationer fra hjemmet, såsom klokkeslæt, temperatur og luftfugtighed.
+
+Projektet er designet med mulighed for fremtidige udvidelser og integration af yderligere funktioner.
+
+## Indholdsfortegnelse
+
 1. [Introduktion](#introduktion)
 2. [Krav](#krav)
 3. [Installation](#installation)
 4. [Brug](#brug)
 5. [Funktioner](#funktioner)
-6. [Bidrag](#bidrag)
-7. [Licens](#licens)
+6. [Fremtidige udvidelser](#fremtidige-udvidelser)
+7. [Bidrag](#bidrag)
+8. [Licens](#licens)
+
 ---
-## **Introduktion**
-Dette projekt er et simpelt adurino program, som gør det nemmere for forbrugeren at se tid, temperatur og luftfugtighed. 
-Det er en prototype, som er egnet til at skulle blive udvidet med flere forskellige features.
+
+## Introduktion
+
+Home Assistant er en Arduino-baseret prototype, der gør det nemt at aflæse informationer om indeklima og tid direkte på et OLED-display.
+
+Systemet anvender sensorer og et realtidsur (RTC) til at indsamle og præsentere følgende informationer:
+
+- Aktuelt klokkeslæt
+- Temperatur i grader Celsius (°C)
+- Relativ luftfugtighed i procent (%)
+
+Derudover understøtter systemet manuel indstilling af klokkeslættet ved hjælp af fysiske knapper.
+
+Projektet er udviklet med fokus på enkel betjening, overskuelig kode og mulighed for videreudvikling.
+
 ---
-## **Krav**
-- Adurino board
-- Adurino IDE eller VS Code
+
+## Krav
+
+### Hardware
+
+- Arduino-board
+- OLED-display (SSD1306, 128 × 64 pixels)
+- DHT-temperatur- og luftfugtighedssensor (DHT11)
+- RTC-modul (realtidsur)
+- Trykknapper til navigation og indstilling
+- Jumperkabler og breadboard
+- USB-kabel til programmering og strømforsyning
+
+### Software
+
+- Arduino IDE eller Visual Studio Code med Arduino-understøttelse
+- Nødvendige Arduino-biblioteker:
+  - `Wire`
+  - `SPI`
+  - `Adafruit_GFX`
+  - `Adafruit_SSD1306`
+  - `DHT`
+  - `RTClib`
+
 ---
-## **Installation**
-Trin-for-trin instruktioner til installation og opsætning.
-**Eksempel:**
-1. Klon repository:
-   ```bash
-   git clone https://github.com/Kasperake/HomeAssistant.git
-   ```
-2. Åbn Adurino IDE
-   ```åbn
-   ProgrammeringsOpgave_H3_IoT_Smart_Home
-   ```
+
+## Installation
+
+Følg nedenstående trin for at installere og starte projektet.
+
+### 1. Klon repository
+
+```bash
+git clone https://github.com/Kasperake/HomeAssistant.git
+```
+
+### 2. Åbn projektet
+
+Åbn Arduino IDE, og indlæs projektets `.ino`-fil fra projektmappen:
+
+`ProgrammeringsOpgave_H3_IoT_Smart_Home`
+
+### 3. Installer biblioteker
+
+Åbn **Library Manager** i Arduino IDE, og installer de nødvendige biblioteker.
+
+### 4. Tilslut hardware
+
+Tilslut OLED-display, sensorer, RTC-modul og trykknapper til Arduino-boardet i henhold til projektets pin-konfiguration.
+
+### 5. Upload programmet
+
+1. Tilslut Arduino-boardet til computeren.
+2. Vælg det korrekte board under **Tools → Board**.
+3. Vælg den korrekte port under **Tools → Port**.
+4. Klik på **Upload** for at overføre programmet.
+
 ---
-## **Brug**
-Der sættes strøm til.
+
+## Brug
+
+Når Arduino-boardet tilsluttes strøm, starter systemet automatisk.
+
+OLED-displayet viser informationer om klokkeslæt, temperatur og luftfugtighed.
+
+Brugeren kan navigere mellem visningerne og manuelt indstille klokkeslættet ved hjælp af de tilsluttede trykknapper.
+
 ---
-## **Funktioner**
-- Visning af tid, temperatur og luftfugtighed.
-- Måling af temperatur og luftfugtighed.
-- Indstille klokken manuelt
+
+## Funktioner
+
+### Implementerede funktioner
+
+- **Klokkeslæt:** Visning af aktuel tid via RTC-modul.
+- **Temperatur:** Måling og visning af temperatur i °C.
+- **Luftfugtighed:** Måling og visning af relativ luftfugtighed i %.
+- **OLED-display:** Præsentation af informationer på et 128 × 64 pixels display.
+- **Manuel tidsindstilling:** Justering af timer, minutter og sekunder via trykknapper.
+
 ---
-## **Bidrag**
-Udvid med nye "home assistant" features.    
+
+## Fremtidige udvidelser
+
+Projektet er en prototype og kan videreudvikles med yderligere Smart Home-funktioner.
+
+Mulige udvidelser omfatter:
+
+- Automatisk styring af belysning.
+- Overvågning af indeklima.
+- Styring af luftfugter baseret på luftfugtighed.
+- Wi-Fi-forbindelse og fjernovervågning.
+- Integration af flere sensorer.
+- Udvidet menunavigation på OLED-displayet.
+
 ---
-## **Licens**
+
+## Bidrag
+
+Projektet er udviklet som et undervisningsprojekt i H3 Praktisk Programmering.
+
+---
+
+## Licens
+
 Dette projekt er licenseret under [MIT License](LICENSE).
----
-
-
