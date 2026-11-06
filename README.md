@@ -86,6 +86,24 @@ git clone https://github.com/Kasperake/HomeAssistant.git
 
 Tilslut OLED-display, sensorer, RTC-modul og trykknapper til Arduino-boardet i henhold til projektets pin-konfiguration.
 
+Button table 
+| Pin | Description |
+|------|-------------|
+| 12 | Select Button / RTC/Temp switch |
+| 8 | Up Button |
+| 7 | Down Button |
+| 3 | Adjust/Confirm Button |
+
+OLED table
+| Pin | Component | Description |
+| 2 | DHT11 | Signal |
+| SCL | RTC | Clock |
+| SLA | RTC | Data |
+| SCL | OLED | Clock | 
+| SLA | OLED | Clock |
+
+
+
 ### 5. Upload programmet
 
 1. Tilslut Arduino-boardet til computeren.
@@ -102,7 +120,9 @@ Når Arduino-boardet tilsluttes strøm, starter systemet automatisk.
 OLED-displayet viser informationer om klokkeslæt, temperatur og luftfugtighed.
 
 Brugeren kan navigere mellem visningerne og manuelt indstille klokkeslættet ved hjælp af de tilsluttede trykknapper.
-
+![Arduino Circuit](rtc.jpeg)
+![Arduino Circuit](adjust_time.jpeg)
+![Arduino Circuit](temp_humidity.jpeg)
 ---
 
 ## Funktioner
