@@ -119,8 +119,9 @@ OLED table
 Når Arduino-boardet tilsluttes strøm, starter systemet automatisk.
 
 OLED-displayet viser informationer om klokkeslæt, temperatur og luftfugtighed.
+Brugeren kan navigere mellem visningerne og manuelt indstille klokkeslættet ved hjælp af de tilsluttede trykknapper. 
+Se oversigt over knapper på [Circuit](#circuit)
 
-Brugeren kan navigere mellem visningerne og manuelt indstille klokkeslættet ved hjælp af de tilsluttede trykknapper.
 ![Arduino Circuit](rtc.jpeg)
 ![Arduino Circuit](adjust_time.jpeg)
 ![Arduino Circuit](temp_humidity.jpeg)
