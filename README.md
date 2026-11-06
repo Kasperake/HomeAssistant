@@ -16,6 +16,7 @@ Projektet er designet med mulighed for fremtidige udvidelser og integration af y
 6. [Fremtidige udvidelser](#fremtidige-udvidelser)
 7. [Bidrag](#bidrag)
 8. [Licens](#licens)
+9. [Circuit](#circuit)
 
 ---
 
@@ -42,7 +43,7 @@ Projektet er udviklet med fokus på enkel betjening, overskuelig kode og mulighe
 - Arduino-board
 - OLED-display (SSD1306, 128 × 64 pixels)
 - DHT-temperatur- og luftfugtighedssensor (DHT11)
-- RTC-modul (realtidsur)
+- RTC-modul (realtidsur / DS3231)
 - Trykknapper til navigation og indstilling
 - Jumperkabler og breadboard
 - USB-kabel til programmering og strømforsyning
@@ -51,12 +52,12 @@ Projektet er udviklet med fokus på enkel betjening, overskuelig kode og mulighe
 
 - Arduino IDE eller Visual Studio Code med Arduino-understøttelse
 - Nødvendige Arduino-biblioteker:
-  - `Wire`
-  - `SPI`
-  - `Adafruit_GFX`
-  - `Adafruit_SSD1306`
-  - `DHT`
-  - `RTClib`
+  - `Wire v1.17.4`
+  - `SPI v1.17.4`
+  - `Adafruit_GFX v1.13.0`
+  - `Adafruit_SSD1306 v.2.5.17`
+  - `DHT v1.4.7`
+  - `RTClib v2.1.4`
 
 ---
 
@@ -140,4 +141,5 @@ Projektet er udviklet som et undervisningsprojekt i H3 Praktisk Programmering.
 
 Dette projekt er licenseret under [MIT License](LICENSE).
 
+## Circuit
 ![Arduino Circuit](circuit.jpeg)
