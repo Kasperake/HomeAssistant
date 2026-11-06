@@ -139,3 +139,5 @@ Projektet er udviklet som et undervisningsprojekt i H3 Praktisk Programmering.
 ## Licens
 
 Dette projekt er licenseret under [MIT License](LICENSE).
+
+![Arduino Circuit](circuit.jpeg)
