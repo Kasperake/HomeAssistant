@@ -291,10 +291,12 @@ void loop() {
   }
 }
 
+// Simulate sending json to external rest api.
 String saveMeasurementToJson(float temperature, float humidity) 
 {
   JsonDocument json; 
-
+  DateTime now = getDateTime(); 
+  json["timestamp"] = now.timestamp(DateTime::TIMESTAMP_FULL);
   json["temperature"] = temperature;
   json["humidity"] = humidity; 
 
